@@ -7,6 +7,7 @@ import sys
 import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "fst"))
 
 from flask import Flask, render_template, request, jsonify
 from analyzer.analyzer import KarelianAnalyzer
@@ -50,4 +51,6 @@ def paradigm():
 
 if __name__ == "__main__":
     get_analyzer()  # preload on startup
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    import fst_analyzer
+    fst_analyzer.analyze("a")  # warm up WSL so the first real request isn't slow
+    app.run(debug=True, host="0.0.0.0", port=5000, use_reloader=False)

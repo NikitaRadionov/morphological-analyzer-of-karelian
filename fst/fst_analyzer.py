@@ -45,7 +45,7 @@ def _run_lookup(hfstol_path, query):
         result = subprocess.run(
             ["wsl", "-d", "Ubuntu", "--", "bash", "-c",
              f"cd '{wsl_dir}' && hfst-optimized-lookup {fname}"],
-            input=query.encode("utf-8"), capture_output=True, timeout=5,
+            input=query.encode("utf-8"), capture_output=True, timeout=20,
         )
     except Exception:
         return ""
