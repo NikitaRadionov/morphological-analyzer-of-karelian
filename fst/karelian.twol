@@ -1,0 +1,42 @@
+! Two-level morphophonology rules for Karelian noun consonant gradation.
+! Demonstrates the classic Finnic "strong grade / weak grade" alternation:
+!   {GK}  kk ~ k     (gemination reduction, e.g. akka ~ akan)
+!   {GP}  p  ~ v      (lenition, e.g. arpa ~ arvan)
+!   {GD}  k  ~ 0      (full deletion, e.g. alku ~ alun)
+!
+! Strong grade appears in the open syllable of the bare nominative (word-final).
+! Weak grade appears when the genitive suffix -n closes the syllable.
+
+Alphabet
+  a b c d e f g h i j k l m n o p q r s t u v w x y z
+  ä ö š č ž
+  %{GK%}:kk %{GK%}:k
+  %{GP%}:p  %{GP%}:v
+  %{GD%}:k  %{GD%}:0
+;
+
+Rules
+
+"GK strong grade (word-final nominative)"
+%{GK%}:kk <=> _ a .#. ;
+
+"GK weak grade (before genitive -n)"
+%{GK%}:k <=> _ a n .#. ;
+
+"GP strong grade (word-final nominative)"
+%{GP%}:p <=> _ a .#. ;
+
+"GP weak grade (before genitive -n)"
+%{GP%}:v <=> _ a n .#. ;
+
+"GD strong grade (word-final nominative, u-stem)"
+%{GD%}:k <=> _ u .#. ;
+
+"GD strong grade (word-final nominative, a-stem)"
+%{GD%}:k <=> _ a .#. ;
+
+"GD weak grade / deleted (before genitive -n, u-stem)"
+%{GD%}:0 <=> _ u n .#. ;
+
+"GD weak grade / deleted (before genitive -n, a-stem)"
+%{GD%}:0 <=> _ a n .#. ;
