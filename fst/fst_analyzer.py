@@ -39,13 +39,16 @@ def available():
 
 
 def _run_lookup(hfstol_path, query):
-    wsl_dir = _wsl_path(os.path.dirname(hfstol_path))
-    fname = os.path.basename(hfstol_path)
     try:
+        if os.name == "nt":  # Windows — через WSL
+            wsl_dir = _wsl_path(os.path.dirname(hfstol_path))
+            fname = os.path.basename(hfstol_path)
+            cmd = ["wsl", "-d", "Ubuntu", "--", "bash", "-c",
+                   f"cd '{wsl_dir}' && hfst-optimized-lookup {fname}"]
+        else:  # Linux / Mac — нативный HFST
+            cmd = ["hfst-optimized-lookup", hfstol_path]
         result = subprocess.run(
-            ["wsl", "-d", "Ubuntu", "--", "bash", "-c",
-             f"cd '{wsl_dir}' && hfst-optimized-lookup {fname}"],
-            input=query.encode("utf-8"), capture_output=True, timeout=20,
+            cmd, input=query.encode("utf-8"), capture_output=True, timeout=20,
         )
     except Exception:
         return ""
